@@ -1,5 +1,5 @@
 {
-  "name": "-<%= kebabCaseComponentName %>",
+  "name": "@local/<%= kebabCaseComponentName %>",
   "version": "<%= version %>",
   "homepage": "",
   "license": "MIT",
