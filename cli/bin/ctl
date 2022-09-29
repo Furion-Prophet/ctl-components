@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+
+const { printPkgVersion } = require('../dist/util');
+
+program
+  .version(printPkgVersion(), '-V, --version')
+  .usage('[options] <file ...>')
+  .command('create <name>', 'Create Component for project')
+  .command('collect', 'Collect the stories of specific components')
+  .parse(process.argv);

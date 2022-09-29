@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "jsx": "react-native",
+    "lib": ["ESNext"],
+    "types": ["react-native"]
+  },
+  "include": ["./"],
+  "exclude": ["**/taro", "**/lib", "**/node_modules", "**/dist", "**/__tests__", "**/demo"]
+}

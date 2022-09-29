@@ -1,0 +1,19 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "0.0.1",
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "stream": true,
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "ignored-file",
+        "*.md"
+      ],
+      "registry": "http://npm.com.cn",
+      "message": "chore(release): publish"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const inquirer = require('inquirer');
+
+const { promptList, initComponent } = require('../dist/create');
+
+program
+  .action(() => {
+    inquirer.prompt(promptList).then(config => {
+      const { name, type: [type] } = config;
+      initComponent({ name, type })
+    })
+  })
+  .parse(process.argv);
+
+

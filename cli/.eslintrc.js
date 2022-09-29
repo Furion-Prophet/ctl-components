@@ -1,0 +1,23 @@
+module.exports = {
+  extends: ['plugin:@typescript-eslint/recommended'],
+  rules: {
+    'no-console': 0,
+    'global-require': 0,
+    'class-methods-use-this': 0,
+    'no-param-reassign': 0,
+    'consistent-return': 0,
+    'import/no-extraneous-dependencies': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/no-use-before-define': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/member-delimiter-style': 0,
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/no-namespace': 0,
+    '@typescript-eslint/no-unused-vars': 1,
+  },
+};
