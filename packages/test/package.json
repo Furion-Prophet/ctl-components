@@ -1,6 +1,6 @@
 {
-  "name": "-<%= kebabCaseComponentName %>",
-  "version": "<%= version %>",
+  "name": "-test",
+  "version": "0.0.1",
   "homepage": "",
   "license": "MIT",
   "main": "index.js",

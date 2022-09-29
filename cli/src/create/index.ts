@@ -3,6 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as ejs from 'ejs';
+import { execSync } from 'child_process';
+import { ROOT_DIR } from '../lib/constants';
 import { getCliRootPath, buildComponentName, printPkgVersion } from '../util';
 
 const allowTypes = ['rn', 'taro'];
@@ -36,41 +38,39 @@ export function initComponent({ name, type }) {
     PascalCaseComponentName: PascalCase,
     version: printPkgVersion(),
   }
-  create({ targetPath: packagePath, tempPath, data })
+  create({ targetPath: packagePath, tempPath, data });
+  execSync('yarn install --registry https://registry.npm.taobao.org/', {
+    cwd: ROOT_DIR,
+    stdio: 'inherit',
+  });
 }
 
 function create({ targetPath, tempPath, data = {} }) {
   if (!fs.existsSync(targetPath)) fse.mkdirsSync(targetPath); // 创建组件文件夹
-  fs.readdir(tempPath, function(err, files) {
-    if (err) {
-      console.warn(err, "读取文件夹错误！")
-    } else {
-      files.forEach((filename) => {
-        const tempFilePath = path.join(tempPath, filename);
-        fs.stat(tempFilePath, (error, stats) => {
-          if (error) {
-            console.warn('获取文件stats失败');
-          } else {
-            const isDir = stats.isDirectory(); //是文件夹
-            const isTemp = filename.endsWith('.tpl');
-            const newFileName = filename.split('.tpl')[0];
-            const targetFile = path.resolve(targetPath, newFileName);
-            if (isDir) create({ targetPath: `${targetPath}/${filename}`, tempPath: `${tempPath}/${filename}`, data});
-            else if (isTemp) {
-              ejs.renderFile(tempFilePath, data, (err, str) => {
-                fse.writeFileSync(targetFile, str || '');
-              });
-            } else fse.copySync(tempFilePath, targetFile);
-          }
-        })}
-      );
-    }
+  const files = fs.readdirSync(tempPath);
+  if (!(files && files.length)) {
+    console.warn("读取文件夹错误！")
+    return;
+  }
+  files.forEach((filename) => {
+    const tempFilePath = path.join(tempPath, filename);
+    const stats = fs.statSync(tempFilePath);
+    const isDir = stats.isDirectory(); // 是文件夹
+    const isTemp = filename.endsWith('.tpl');
+    const newFileName = filename.split('.tpl')[0];
+    const targetFile = path.resolve(targetPath, newFileName);
+    if (isDir) create({ targetPath: `${targetPath}/${filename}`, tempPath: `${tempPath}/${filename}`, data});
+    else if (isTemp) {
+      ejs.renderFile(tempFilePath, data, (err, str) => {
+        fse.writeFileSync(targetFile, str || '');
+      });
+    } else fse.copySync(tempFilePath, targetFile);
   });
 }
 
 
 function checkValid(name, packagePath) {
-  const valid = validate(name);
+  const valid = validate(`furion-${name}`);
   const { validForNewPackages } = valid;
   if (!validForNewPackages) {
     console.log('组件名称不合法');

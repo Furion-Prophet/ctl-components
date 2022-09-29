@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { ComponentReturn } from '../typings/index';
-import { <%= PascalCaseComponentName %>Props } from '../typings/rn';
+import { <%= PascalCaseComponentName %>Props } from '../typings/component-rn';
 
 interface <%= PascalCaseComponentName %>State {}
 
