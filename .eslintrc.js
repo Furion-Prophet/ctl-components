@@ -14,7 +14,7 @@ const eslintConfig = {
     },
   },
 
-  extends: ['eslint-config-airbnb', 'eslint-config-prettier', 'eslint-config-prettier/react'],
+  extends: ['eslint-config-airbnb', 'eslint-config-prettier', 'eslint-config-prettier/react', 'plugin:prettier/recommended'],
   plugins: ['eslint-plugin-react-hooks', 'eslint-plugin-prettier'],
 
   env: {
@@ -158,6 +158,10 @@ const eslintConfig = {
 
         '@typescript-eslint/indent': OFF,
         'react-native/no-inline-styles': OFF,
+        'prettier/prettier': ['error', {
+          jsxSingleQuote: true,
+          singleQuote: true,
+        }],
       },
     },
     {
@@ -218,9 +222,11 @@ const eslintConfig = {
           },
         ],
 
-        'jsx-quotes': ['error', 'prefer-single'],
         '@typescript-eslint/indent': OFF,
-        'prettier/prettier': ['error', { jsxSingleQuote: true }],
+        'prettier/prettier': ['error', {
+          jsxSingleQuote: true,
+          singleQuote: true,
+        }],
       },
     },
     {
