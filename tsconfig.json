@@ -7,23 +7,14 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "jsx": "preserve",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "outDir": "./lib/",
     "strict": true,
     "target": "esnext",
-    "typeRoots": [
-      "node_modules/@types",
-      "packages/typings/*.d.ts"
-    ]
+    "typeRoots": ["node_modules/@types", "packages/typings/*.d.ts"]
   },
-  "exclude": [
-    "node_modules",
-    "lib"
-  ],
-  "include": [
-    "packages/**/*.ts",
-    "packages/**/*.tsx"
-  ]
+  "exclude": ["node_modules", "lib"],
+  "include": ["packages/**/**/*.ts", "packages/**/**/*.tsx"]
 }

@@ -1,8 +1,8 @@
-import Taro,{ Component } from '@tarojs/taro';
+import React from 'react';
 import { View, Text } from '@tarojs/components';
-import { <%= PascalCaseComponentName %>Props } from '../typings/component-taro';
+import { <%= PascalCaseComponentName %>Props } from './typings/component-taro';
 
-export default class <%= PascalCaseComponentName %> extends Component<<%= PascalCaseComponentName %>Props> {
+export default class <%= PascalCaseComponentName %> extends React.Component<<%= PascalCaseComponentName %>Props> {
   static options = {
     addGlobalClass: true,
   };

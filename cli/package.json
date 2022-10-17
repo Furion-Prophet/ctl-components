@@ -27,5 +27,6 @@
     "validate-npm-package-name": "^3.0.0",
     "fs-extra": "^8.1.0",
     "ejs": "^3.0.1"
-  }
+  },
+  "devDependencies": {}
 }

@@ -1,7 +1,7 @@
-import renderer from "react-test-renderer";
-import cases from "../demo";
+import renderer from 'react-test-renderer';
+import cases from '../demo';
 
-describe("正常渲染即可", () => {
+describe('正常渲染即可', () => {
   Object.keys(cases).forEach((caseName) =>
     it(caseName, () => {
       const testCase = cases[caseName];

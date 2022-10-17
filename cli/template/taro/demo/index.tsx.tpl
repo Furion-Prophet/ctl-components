@@ -1,6 +1,6 @@
-import Taro, { Component } from '@tarojs/taro';
+import React, { Component } from 'react';
 import { View } from '@tarojs/components';
-import <%= PascalCaseComponentName %> from '../<%= kebabCaseComponentName %>/taro';
+import <%= PascalCaseComponentName %> from '@ctl/<%= kebabCaseComponentName %>/taro';
 
 interface DemoPageState {
   [key: string]: any;

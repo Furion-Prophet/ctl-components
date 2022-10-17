@@ -8,6 +8,6 @@ describe('正常渲染即可', () => {
       const instance = renderer.create(testCase);
       // 初始化默认注释，merge 前需要打开指定端的单测开关
       // expect(instance.toJSON()).toMatchSnapshot();
-    }),
+    })
   );
 });

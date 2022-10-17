@@ -14,7 +14,12 @@ const eslintConfig = {
     },
   },
 
-  extends: ['eslint-config-airbnb', 'eslint-config-prettier', 'eslint-config-prettier/react', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint-config-airbnb',
+    'eslint-config-prettier',
+    'eslint-config-prettier/react',
+    'plugin:prettier/recommended',
+  ],
   plugins: ['eslint-plugin-react-hooks', 'eslint-plugin-prettier'],
 
   env: {
@@ -44,6 +49,8 @@ const eslintConfig = {
     'class-methods-use-this': OFF,
     'import/prefer-default-export': OFF,
     'global-require': WARN,
+    'no-use-before-define': OFF,
+    '@typescript-eslint/no-use-before-define': 0,
 
     'jsx-a11y/anchor-is-valid': [
       ERROR,
@@ -54,7 +61,10 @@ const eslintConfig = {
       },
     ],
 
-    'react/jsx-filename-extension': [ERROR, { extensions: ['.js', '.jsx', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      ERROR,
+      { extensions: ['.js', '.jsx', '.tsx'] },
+    ],
 
     'react/prop-types': OFF,
 
@@ -88,7 +98,6 @@ const eslintConfig = {
     'import/no-deprecated': OFF,
 
     'import/no-extraneous-dependencies': WARN,
-    'import/no-extraneous-dependencies': OFF,
     'react/no-find-dom-node': WARN,
   },
 
@@ -145,7 +154,10 @@ const eslintConfig = {
         '@typescript-eslint/no-useless-constructor': WARN,
         'react/sort-comp': OFF,
         'react/jsx-props-no-spreading': OFF,
-        'react/jsx-filename-extension': [ERROR, { extensions: ['.js', '.jsx', '.tsx'] }],
+        'react/jsx-filename-extension': [
+          ERROR,
+          { extensions: ['.js', '.jsx', '.tsx'] },
+        ],
 
         'import/extensions': [
           OFF,
@@ -158,10 +170,13 @@ const eslintConfig = {
 
         '@typescript-eslint/indent': OFF,
         'react-native/no-inline-styles': OFF,
-        'prettier/prettier': ['error', {
-          jsxSingleQuote: true,
-          singleQuote: true,
-        }],
+        'prettier/prettier': [
+          'error',
+          {
+            jsxSingleQuote: true,
+            singleQuote: true,
+          },
+        ],
       },
     },
     {
@@ -208,7 +223,10 @@ const eslintConfig = {
         ],
         'no-useless-constructor': OFF,
         '@typescript-eslint/no-useless-constructor': WARN,
-        'react/jsx-filename-extension': [ERROR, { extensions: ['.js', '.jsx', '.tsx'] }],
+        'react/jsx-filename-extension': [
+          ERROR,
+          { extensions: ['.js', '.jsx', '.tsx'] },
+        ],
         'react/no-find-dom-node': WARN,
         'react/react-in-jsx-scope': OFF,
         'taro/render-props': OFF,
@@ -223,10 +241,13 @@ const eslintConfig = {
         ],
 
         '@typescript-eslint/indent': OFF,
-        'prettier/prettier': ['error', {
-          jsxSingleQuote: true,
-          singleQuote: true,
-        }],
+        'prettier/prettier': [
+          'error',
+          {
+            jsxSingleQuote: true,
+            singleQuote: true,
+          },
+        ],
       },
     },
     {
