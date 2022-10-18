@@ -8,6 +8,11 @@
     "build": "tsc --project ./tsconfig.json",
     "clean": "rm -rf lib"
   },
+  "templateInfo": {
+    "name": "test",
+    "name_CH": "测试",
+    "platform": "rn"
+  },
   "dependencies": {
     "classnames": "^2.2.6"
   },

@@ -7,11 +7,13 @@ const { promptList, initComponent } = require('../dist/create');
 
 program
   .action(() => {
-    inquirer.prompt(promptList).then(config => {
-      const { name, type: [type] } = config;
-      initComponent({ name, type })
-    })
+    inquirer.prompt(promptList).then((config) => {
+      const {
+        name,
+        type: [type],
+        cName,
+      } = config;
+      initComponent({ name, type, cName });
+    });
   })
   .parse(process.argv);
-
-

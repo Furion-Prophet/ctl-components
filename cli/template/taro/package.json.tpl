@@ -8,6 +8,11 @@
     "build": "tsc --project ./tsconfig.json",
     "clean": "rm -rf lib"
   },
+  "templateInfo": {
+    "name": "<%= name %>",
+    "name_CH": "<%= name_CH %>",
+    "platform": "taro"
+  },
   "dependencies": {
     "classnames": "^2.2.6"
   },

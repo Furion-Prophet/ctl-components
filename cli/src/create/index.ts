@@ -23,9 +23,17 @@ export const promptList = [
     choices: allowTypes,
     default: ['rn'],
   },
+  {
+    name: 'cName',
+    type: 'input',
+    message: '组件中文名',
+    transformer(name) {
+      return name.trim();
+    },
+  },
 ];
 
-export function initComponent({ name, type }) {
+export function initComponent({ name, type, cName }) {
   const { kebabCase, PascalCase } = buildComponentName(name);
   const packagePath = path.resolve(getCliRootPath(), '../packages', kebabCase);
   const valid = checkValid(name, packagePath);
@@ -36,6 +44,8 @@ export function initComponent({ name, type }) {
     kebabCaseComponentName: kebabCase,
     PascalCaseComponentName: PascalCase,
     version: printPkgVersion(),
+    name_CH: cName,
+    name,
   };
   create({ targetPath: packagePath, tempPath, data });
   execSync('yarn install --registry https://registry.npm.taobao.org/', {
