@@ -10,7 +10,7 @@ program
     inquirer.prompt(promptList).then((config) => {
       const {
         name,
-        type: [type],
+        type,
         cName,
       } = config;
       initComponent({ name, type, cName });

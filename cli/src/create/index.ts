@@ -6,7 +6,7 @@ import * as ejs from 'ejs';
 import { execSync } from 'child_process';
 import { getCliRootPath, buildComponentName, printPkgVersion } from '../util';
 
-const allowTypes = ['rn', 'taro'];
+const allowTypes = [{ name: 'rn', value: 'rn' }, { name: 'taro', value: 'taro' }];
 export const promptList = [
   {
     type: 'input',
@@ -18,10 +18,10 @@ export const promptList = [
   },
   {
     name: 'type',
-    type: 'checkbox',
+    type: 'rawlist',
     message: '请选择组件类型',
     choices: allowTypes,
-    default: ['rn'],
+    default: 'rn',
   },
   {
     name: 'cName',

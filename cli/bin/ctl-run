@@ -1,24 +1,26 @@
 #!/usr/bin/env node
+
 const program = require('commander');
 const inquirer = require('inquirer');
-const get = require('lodash/get');
 
-const { collect } = require('../dist/collect');
+const { run } = require('../dist/run');
 const { CollectType, CollectComponent } = require('../dist/util/const');
 
 program
   .option('-n, --name <name>', 'Which component wants to collect', '')
   .option('-t, --type <type>', 'The environment of collecting, taro/rn')
   .action((data) => {
-    let { type, name } = data;
+    let { name: componentName, type } = data;
+
     const select = [];
     if (!type) select.push(CollectType);
 
-    if (!name) select.push(CollectComponent);
+    if (!componentName) select.push(CollectComponent);
+    
     inquirer.prompt(select).then((config) => {
-      type = type || get(config, 'type');
-      name = name || get(config, 'name');
-      collect({ name, type });
+      type = type || config.type;
+      componentName = componentName || config.name;
+      run({ componentName, type });
     });
   })
   .parse(process.argv);

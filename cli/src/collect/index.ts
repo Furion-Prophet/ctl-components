@@ -5,15 +5,7 @@ import * as ora from 'ora';
 import * as fse from 'fs-extra';
 import * as chokidar from 'chokidar';
 import { execSync } from 'child_process';
-import { getCliRootPath } from '../util';
-
-const getAllCompFiles = () => {
-  const packagePath = path.resolve(getCliRootPath(), '../packages');
-  const files = fs.readdirSync(packagePath);
-  return files.filter(
-    (name) => name !== 'runtime-taro' && name !== 'runtime-rn'
-  );
-};
+import { getCliRootPath, getAllCompFiles, collectAllComponentsName } from '../util';
 
 function toNodeModules({ componentPath, targetPath }) {
   execSync(`cp -r ${componentPath}/. ${targetPath}`);
@@ -69,18 +61,17 @@ function setRuntimeConfigOnTaro() {
   fs.writeFileSync(configPath, config, { flag: 'w+' });
 }
 
-export function collectAllComponentsName() {
-  const files = getAllCompFiles();
-  return ['all'].concat(files);
-}
-
 const watches: any[] = [];
 export function collect({ type, name }) {
   const isAll = name === 'all';
+
+  const componentsPath = path.resolve(getCliRootPath(), '../packages/runtime-taro/src/components')
+  const hasComponents = fs.existsSync(componentsPath);
+  if (!hasComponents) fse.mkdirsSync(componentsPath);
+
   const spinner = ora(chalk.green('收集组件工作开始...\n')).start();
 
   const runtimePath = path.resolve(getCliRootPath(), '../node_modules', '@ctl');
-
   const hasPackage = fs.existsSync(runtimePath);
   if (!hasPackage) fse.mkdirsSync(runtimePath);
 

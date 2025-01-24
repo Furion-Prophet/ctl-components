@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "update:cli": "cd cli && yarn build",
-    "playground": ""
+    "dev": "ctl run"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
