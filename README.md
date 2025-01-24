@@ -17,16 +17,38 @@ cd ..
 ```
 **/ctl-components % ctl create
 
-? 请输入组件名: swiper
+? 请输入组件名: buttons
 ? 请选择组件类型 rn
-? 组件中文名 轮播
+? 组件中文名 按钮
 ```
 会在packages生成对应的组件目录。
 ==这里如果报错了(Error: certificate has expired), 已经创建成功，install失败，进入组件目录重新install==
 
 **生成组件的目录结构**
 ```
-
+buttons
+├── rn
+│   ├── __tests__
+│   │   └── index.tsx
+│   ├── demo
+│   │   └── index.tsx
+│   |── typings
+│   │   └── component-rn.d.ts
+│   |── package.json
+│   |── README.json
+│   |── tsconfig.json
+│   └── index.tsx
+├── taro
+│   ├── __tests__
+│   │   └── index.test.js
+│   ├── demo
+│   │   └── index.tsx
+│   |── typings
+│   │   └── component-taro.d.ts
+│   |── package.json
+│   |── README.json
+│   |── tsconfig.json
+│   └── index.tsx
 ```
 
 ### 包管理工具

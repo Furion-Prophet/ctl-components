@@ -9,4 +9,5 @@ program
   .usage('[options] <file ...>')
   .command('create', 'Create Component for project')
   .command('collect', 'Collect the stories of specific components')
+  .command('run', 'Run Dev Server')
   .parse(process.argv);
