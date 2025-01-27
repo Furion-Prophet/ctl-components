@@ -24,7 +24,7 @@
     "fs-extra": "^8.1.0",
     "glob": "^8.0.3",
     "inquirer": "^7.1.0",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "minimist": "^1.2.5",
     "pascalcase": "^1.0.0",
     "tinify": "^1.6.0-beta.2",
