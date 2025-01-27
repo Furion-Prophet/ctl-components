@@ -3,6 +3,7 @@ import * as ora from 'ora';
 import * as chalk from 'chalk';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as chokidar from 'chokidar';
 
 import { getCliRootPath, type2FolderName } from '../util';
 

@@ -54,7 +54,7 @@
   },
   "workspaces": {
     "packages": [
-      "packages/runtime-taro"
+      "packages/*"
     ]
   },
   "husky": {
