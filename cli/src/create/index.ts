@@ -48,11 +48,11 @@ export function initComponent({ name, type, cName }) {
     name,
   };
   create({ targetPath: packagePath, tempPath, data });
-  execSync('yarn install --registry https://registry.npm.taobao.org/', {
+  execSync('yarn install', {
     cwd: path.resolve(packagePath, 'taro'),
     stdio: 'inherit',
   });
-  execSync('yarn install --registry https://registry.npm.taobao.org/', {
+  execSync('yarn install', {
     cwd: path.resolve(packagePath, 'rn'),
     stdio: 'inherit',
   });

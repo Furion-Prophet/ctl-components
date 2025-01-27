@@ -3,9 +3,8 @@ import * as fs from 'fs';
 import * as chalk from 'chalk';
 import * as ora from 'ora';
 import * as fse from 'fs-extra';
-import * as chokidar from 'chokidar';
 import { execSync } from 'child_process';
-import { getCliRootPath, getAllCompFiles, collectAllComponentsName } from '../util';
+import { getCliRootPath, getAllCompFiles, type2FolderName } from '../util';
 
 function toNodeModules({ componentPath, targetPath }) {
   execSync(`cp -r ${componentPath}/. ${targetPath}`);
@@ -94,7 +93,7 @@ export function collect({ type, name }) {
       onRuntime({ componentPath, targetPath, name: filename });
     });
   } else {
-    const filePath = path.resolve(getCliRootPath(), '../packages', name, type);
+    const filePath = path.resolve(getCliRootPath(), '../packages', name, type2FolderName(type));
     const hasCompPackage = fs.existsSync(filePath);
     if (!hasCompPackage) {
       return spinner.fail(chalk.red(`${name}组件不存在`));

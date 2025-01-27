@@ -40,3 +40,9 @@ export function collectAllComponentsName() {
   const files = getAllCompFiles();
   return ['all'].concat(files);
 }
+
+export function type2FolderName(type) {
+  if (type === 'rn') return 'rn';
+  if (type === 'react') return 'react';
+  return 'taro';
+}
