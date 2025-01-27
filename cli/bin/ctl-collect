@@ -4,21 +4,26 @@ const inquirer = require('inquirer');
 const get = require('lodash/get');
 
 const { collect } = require('../dist/collect');
-const { CollectType, CollectComponent } = require('../dist/util/const');
+const { CollectType } = require('../dist/util/const');
+const { getCollectComponent } = require('../dist/util/index');
 
 program
   .option('-n, --name <name>', 'Which component wants to collect', '')
   .option('-t, --type <type>', 'The environment of collecting, taro/rn')
-  .action((data) => {
+  .action(async (data) => {
     let { type, name } = data;
-    const select = [];
-    if (!type) select.push(CollectType);
 
-    if (!name) select.push(CollectComponent);
-    inquirer.prompt(select).then((config) => {
+    if (!type) {
+      const config = await inquirer.prompt([CollectType]);
       type = type || get(config, 'type');
+    }
+
+    if (!name) {
+      const CollectComponent = getCollectComponent(type);
+      const config = await inquirer.prompt([CollectComponent]);
       name = name || get(config, 'name');
-      collect({ name, type });
-    });
+    }
+
+    collect({ name, type });
   })
   .parse(process.argv);

@@ -6,7 +6,7 @@ import * as ejs from 'ejs';
 import { execSync } from 'child_process';
 import { getCliRootPath, buildComponentName, printPkgVersion } from '../util';
 
-const allowTypes = [{ name: 'rn', value: 'rn' }, { name: 'taro', value: 'taro' }];
+const allowTypes = [{ name: 'rn', value: 'rn' }, { name: 'taro', value: 'taro' }, { name: 'react(未支持)', value: 'react' }];
 export const promptList = [
   {
     type: 'input',
@@ -35,10 +35,10 @@ export const promptList = [
 
 export function initComponent({ name, type, cName }) {
   const { kebabCase, PascalCase } = buildComponentName(name);
-  const packagePath = path.resolve(getCliRootPath(), '../packages', kebabCase);
+  const packagePath = path.resolve(getCliRootPath(), `../packages/${type}`, kebabCase);
   const valid = checkValid(name, packagePath);
   if (!valid) return;
-  const tempPath = path.resolve(getCliRootPath(), './template');
+  const tempPath = path.resolve(getCliRootPath(), `./template/${type}`);
 
   const data = {
     kebabCaseComponentName: kebabCase,
@@ -49,11 +49,7 @@ export function initComponent({ name, type, cName }) {
   };
   create({ targetPath: packagePath, tempPath, data });
   execSync('yarn install', {
-    cwd: path.resolve(packagePath, 'taro'),
-    stdio: 'inherit',
-  });
-  execSync('yarn install', {
-    cwd: path.resolve(packagePath, 'rn'),
+    cwd: path.resolve(packagePath),
     stdio: 'inherit',
   });
 }

@@ -10,11 +10,11 @@ import { getCliRootPath, type2FolderName } from '../util';
 export function run({ componentName, type }) {
   const isRN = type === 'rn';
   const isAll = componentName === 'all';
+  const folderTypeName = type2FolderName(type);
 
   let hasCompPackage = true;
   if (!isAll) {
-    const filePath = path.resolve(getCliRootPath(), '../packages', componentName, type2FolderName(type));
-    console.log(filePath)
+    const filePath = path.resolve(getCliRootPath(), '../packages', folderTypeName, componentName);
     hasCompPackage = fs.existsSync(filePath);
   }
 
@@ -25,7 +25,7 @@ export function run({ componentName, type }) {
   }
 
   
-  if (isRN) return;
-  console.log('xxx')
+  // if (isRN) return;
+  // console.log('xxx')
   
 }

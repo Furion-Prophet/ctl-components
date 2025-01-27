@@ -1,8 +1,14 @@
 import * as path from 'path';
-import kebabCase from 'lodash-es/kebabCase';
 import * as fs from 'fs';
 import * as pascalcase from 'pascalcase';
 import { ROOT_DIR } from '../lib/constants';
+
+type CollectType = 'rn' | 'taro' | 'react';
+
+const kebabCase = str =>
+  str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+    .join('-')
+    .toLowerCase();
 
 export function getPkgVersion(): string {
   const lernaJSONPath = path.join(ROOT_DIR, 'lerna.json');
@@ -28,21 +34,30 @@ export function buildComponentName(name) {
   };
 }
 
-export const getAllCompFiles = () => {
-  const packagePath = path.resolve(getCliRootPath(), '../packages');
-  const files = fs.readdirSync(packagePath);
-  return files.filter(
-    (name) => name !== 'runtime-taro' && name !== 'runtime-rn'
-  );
+export const getAllCompFiles = (type: CollectType) => {
+  const packagePath = path.resolve(getCliRootPath(), '../packages', type);
+  return fs.readdirSync(packagePath);
 };
 
-export function collectAllComponentsName() {
-  const files = getAllCompFiles();
+export function collectAllComponentsName(type: CollectType) {
+  const files = getAllCompFiles(type);
   return ['all'].concat(files);
 }
 
-export function type2FolderName(type) {
+export function type2FolderName(type): CollectType {
   if (type === 'rn') return 'rn';
   if (type === 'react') return 'react';
   return 'taro';
+}
+
+export function getCollectComponent(type: CollectType) {
+  const folderTypeName = type2FolderName(type);
+  const comps = collectAllComponentsName(folderTypeName);
+  return {
+    name: 'name',
+    type: 'rawlist',
+    message: '请选择组件',
+    choices: comps,
+    default: 'all',
+  }
 }

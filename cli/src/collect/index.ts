@@ -11,7 +11,7 @@ function toNodeModules({ componentPath, targetPath }) {
 }
 
 function toRNRuntime({ componentPath, name }) {
-  const demoPath = path.resolve(componentPath, 'rn/demo');
+  const demoPath = path.resolve(componentPath, 'demo');
   const runtimeRnPath = path.resolve(
     getCliRootPath(),
     '../packages',
@@ -21,7 +21,7 @@ function toRNRuntime({ componentPath, name }) {
 }
 
 function toTaroRuntime({ componentPath, name }) {
-  const demoPath = path.resolve(componentPath, 'taro/demo');
+  const demoPath = path.resolve(componentPath, 'demo');
   const runtimeTaroPath = path.resolve(
     getCliRootPath(),
     '../packages',
@@ -64,7 +64,8 @@ const watches: any[] = [];
 export function collect({ type, name }) {
   const isAll = name === 'all';
 
-  const componentsPath = path.resolve(getCliRootPath(), '../packages/runtime-taro/src/components')
+  const folderTypeName = type2FolderName(type);
+  const componentsPath = path.resolve(getCliRootPath(), `../packages/runtime-${folderTypeName}/src/components`);
   const hasComponents = fs.existsSync(componentsPath);
   if (!hasComponents) fse.mkdirsSync(componentsPath);
 
@@ -75,12 +76,12 @@ export function collect({ type, name }) {
   if (!hasPackage) fse.mkdirsSync(runtimePath);
 
   if (isAll || !name) {
-    const files = getAllCompFiles();
+    const files = getAllCompFiles(folderTypeName);
     files.forEach((filename) => {
       const componentPath = path.resolve(
         getCliRootPath(),
-        '../packages',
-        filename
+        `../packages`,
+        `${folderTypeName}/${filename}`
       );
 
       const targetPath = path.resolve(
@@ -93,7 +94,7 @@ export function collect({ type, name }) {
       onRuntime({ componentPath, targetPath, name: filename });
     });
   } else {
-    const filePath = path.resolve(getCliRootPath(), '../packages', name, type2FolderName(type));
+    const filePath = path.resolve(getCliRootPath(), '../packages', name, folderTypeName);
     const hasCompPackage = fs.existsSync(filePath);
     if (!hasCompPackage) {
       return spinner.fail(chalk.red(`${name}组件不存在`));
