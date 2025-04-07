@@ -71,9 +71,9 @@ export function collect({ type, name }) {
 
   const spinner = ora(chalk.green('收集组件工作开始...\n')).start();
 
-  const runtimePath = path.resolve(getCliRootPath(), '../node_modules', '@ctl');
-  const hasPackage = fs.existsSync(runtimePath);
-  if (!hasPackage) fse.mkdirsSync(runtimePath);
+  const runtimePath = path.resolve(getCliRootPath(), '../node_modules', '@ctl', folderTypeName);
+
+  fse.mkdirsSync(runtimePath);
 
   if (isAll || !name) {
     const files = getAllCompFiles(folderTypeName);
@@ -84,40 +84,28 @@ export function collect({ type, name }) {
         `${folderTypeName}/${filename}`
       );
 
-      const targetPath = path.resolve(
-        getCliRootPath(),
-        '../node_modules',
-        '@ctl',
-        filename
-      );
+      const targetPath = path.resolve(runtimePath, filename);
 
       onRuntime({ componentPath, targetPath, name: filename });
+      spinner.info(chalk.green(`${filename}组件收集完成`));
     });
   } else {
     const filePath = path.resolve(getCliRootPath(), '../packages', name, folderTypeName);
     const hasCompPackage = fs.existsSync(filePath);
     if (!hasCompPackage) {
-      return spinner.fail(chalk.red(`${name}组件不存在`));
+      spinner.fail(chalk.red(`${name}组件不存在`));
+      return [];
     }
-    const targetPath = path.resolve(
-      getCliRootPath(),
-      '../node_modules',
-      '@ctl',
-      name
-    );
+    const targetPath = path.resolve(runtimePath, name);
+
     const componentPath = path.resolve(getCliRootPath(), '../packages', name);
     onRuntime({ componentPath, targetPath, name });
+    spinner.info(chalk.green(`${name}组件收集完成`));
   }
 
   spinner.succeed(chalk.green('demo收集完成'));
 
   setRuntimeConfigOnTaro();
 
-  // const watcher = chokidar.watch(
-  //   watches.map((watch) => `${watch.path}/${type}`),
-  //   {
-  //     persistent: true,
-  //     ignoreInitial: true,
-  //   }
-  // );
+  return watches;
 }

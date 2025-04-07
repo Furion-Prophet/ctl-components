@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from '@tarojs/components';
-import <%= PascalCaseComponentName %> from '@ctl/<%= kebabCaseComponentName %>/taro';
+import <%= PascalCaseComponentName %> from '@ctl/taro/<%= kebabCaseComponentName %>';
 
 interface DemoPageState {
   [key: string]: any;

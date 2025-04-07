@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from '@tarojs/components';
-import Buttons from '@ctl/buttons/taro';
+import Buttons from '@ctl/taro/buttons';
 
 interface DemoPageState {
   [key: string]: any;
@@ -23,7 +23,7 @@ export default class DemoPage extends Component<any, DemoPageState> {
         break;
       }
     }
-    // 用this.cases储存jsx用于单测快照测试
+    // 用this.cases储存jsx用于单测快照测试1
     if (!this.cases[caseName]) {
       this.cases[caseName] = comp;
     }
