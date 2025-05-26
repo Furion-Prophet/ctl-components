@@ -7,10 +7,7 @@ yarn install
 ```
 * 2.初始化命令行工具
 ```
-cd cli
-yarn build
-yarn link
-cd ..
+yarn update:cli
 ```
 * 3.新建组件
 根目录执行==ctl create==，根据提示输入组件信息
@@ -49,6 +46,11 @@ buttons
 │   |── README.json
 │   |── tsconfig.json
 │   └── index.tsx
+```
+
+4.本地运行
+```
+
 ```
 
 ### 包管理工具

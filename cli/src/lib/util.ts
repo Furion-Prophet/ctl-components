@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as pascalcase from 'pascalcase';
-import { ROOT_DIR } from '../lib/constants';
+import { ROOT_DIR } from './constants';
 
 type CollectType = 'rn' | 'taro' | 'react';
 

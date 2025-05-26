@@ -7,3 +7,8 @@ export const CollectType = {
   choices: ['rn', 'taro'],
   default: 'rn',
 };
+
+export const ENV_SHORT = {
+  development: 'dev',
+  production: 'build',
+};

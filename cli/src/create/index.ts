@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as ejs from 'ejs';
 import { execSync } from 'child_process';
-import { getCliRootPath, buildComponentName, printPkgVersion } from '../util';
+import { getCliRootPath, buildComponentName, printPkgVersion } from '../lib/util';
 
 const allowTypes = [{ name: 'rn', value: 'rn' }, { name: 'taro', value: 'taro' }, { name: 'react(未支持)', value: 'react' }];
 export const promptList = [

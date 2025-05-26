@@ -4,7 +4,8 @@ import * as chalk from 'chalk';
 import * as ora from 'ora';
 import * as fse from 'fs-extra';
 import { execSync } from 'child_process';
-import { getCliRootPath, getAllCompFiles, type2FolderName } from '../util';
+import { getCliRootPath, getAllCompFiles, type2FolderName } from '../lib/util';
+import log from '../lib/log';
 
 function toNodeModules({ componentPath, targetPath }) {
   execSync(`cp -r ${componentPath}/. ${targetPath}`);
@@ -69,7 +70,7 @@ export function collect({ type, name }) {
   const hasComponents = fs.existsSync(componentsPath);
   if (!hasComponents) fse.mkdirsSync(componentsPath);
 
-  const spinner = ora(chalk.green('收集组件工作开始...\n')).start();
+  log.info('收集组件工作开始...\n');
 
   const runtimePath = path.resolve(getCliRootPath(), '../node_modules', '@ctl', folderTypeName);
 
@@ -87,23 +88,23 @@ export function collect({ type, name }) {
       const targetPath = path.resolve(runtimePath, filename);
 
       onRuntime({ componentPath, targetPath, name: filename });
-      spinner.info(chalk.green(`${filename}组件收集完成`));
+      log.info(`${filename}组件收集完成`);
     });
   } else {
     const filePath = path.resolve(getCliRootPath(), '../packages', name, folderTypeName);
     const hasCompPackage = fs.existsSync(filePath);
     if (!hasCompPackage) {
-      spinner.fail(chalk.red(`${name}组件不存在`));
+      log.error(chalk.red(`${name}组件不存在`));
       return [];
     }
     const targetPath = path.resolve(runtimePath, name);
 
     const componentPath = path.resolve(getCliRootPath(), '../packages', name);
     onRuntime({ componentPath, targetPath, name });
-    spinner.info(chalk.green(`${name}组件收集完成`));
+    log.info(chalk.green(`${name}组件收集完成`));
   }
 
-  spinner.succeed(chalk.green('demo收集完成'));
+  log.success(chalk.green('demo收集完成'));
 
   setRuntimeConfigOnTaro();
 
