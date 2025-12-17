@@ -1,6 +1,17 @@
+export enum TaroPlatform {
+  weapp = 'weapp',
+  swan = 'swan',
+  h5 = 'h5',
+  tt = 'tt',
+  alipay = 'alipay',
+  rn = 'rn',
+  qq = 'qq',
+  jd = 'jd',
+}
+
 export interface IBuildOptions {
   componentName: string;
   type: 'rn' | 'taro' | 'react';
-  platform: 'weapp' | 'swan' | 'h5' | 'tt' | 'alipay' | 'rn' | 'qq' | 'jd' | 'quickapp';
+  platform: TaroPlatform;
   env: string;
 }

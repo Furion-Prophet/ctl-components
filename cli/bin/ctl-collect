@@ -4,8 +4,8 @@ const inquirer = require('inquirer');
 const get = require('lodash/get');
 
 const { collect } = require('../dist/collect');
-const { CollectType } = require('../dist/util/const');
-const { getCollectComponent } = require('../dist/util/index');
+const { CollectType } = require('../dist/lib/const');
+const { getCollectComponent } = require('../dist/lib/util');
 
 program
   .option('-n, --name <name>', 'Which component wants to collect', '')

@@ -2,7 +2,7 @@
 
 const program = require('commander');
 
-const { printPkgVersion } = require('../dist/util');
+const { printPkgVersion } = require('../dist/lib/util');
 
 program
   .version(printPkgVersion(), '-V, --version')

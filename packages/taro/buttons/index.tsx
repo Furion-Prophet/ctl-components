@@ -7,7 +7,7 @@ export default class Buttons extends React.Component<ButtonsProps> {
   render() {
     return (
       <View>
-        <Text>Buttons11</Text>
+        <Text>Buttons11xx</Text>
       </View>
     );
   }

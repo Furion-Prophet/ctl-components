@@ -1,13 +1,14 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as chalk from 'chalk';
-import * as ora from 'ora';
 import * as fse from 'fs-extra';
 import { execSync } from 'child_process';
 import { getCliRootPath, getAllCompFiles, type2FolderName } from '../lib/util';
 import log from '../lib/log';
 
-function toNodeModules({ componentPath, targetPath }) {
+const NodeModulesPath = path.resolve(getCliRootPath(), '../node_modules', '@ctl');
+
+export function toNodeModules({ componentPath, targetPath }) {
   execSync(`cp -r ${componentPath}/. ${targetPath}`);
 }
 
@@ -61,6 +62,27 @@ function setRuntimeConfigOnTaro() {
   fs.writeFileSync(configPath, config, { flag: 'w+' });
 }
 
+export function updateComponentChange({ changePath }) {
+  const [, folderPath] = changePath.split(/packages\//);
+  const [type, ...other] = folderPath.split('/');
+  // const filename = other[other.length - 1];
+  const commonpath = other.slice(0, -1).join('/');
+
+  const isDemoChange = changePath.includes('/demo');
+  if (isDemoChange) {
+    const runtimeTaroPath = path.resolve(
+      getCliRootPath(),
+      '../packages',
+      `runtime-${type}/src/components`,
+      `${commonpath}/`
+    );
+    execSync(`cp -r ${changePath} ${runtimeTaroPath}`);
+  } else {
+    const runtimePath = path.resolve(NodeModulesPath, `${type}/${commonpath}/`);
+    execSync(`cp -r ${changePath} ${runtimePath}`);
+  }
+}
+
 const watches: any[] = [];
 export function collect({ type, name }) {
   const isAll = name === 'all';
@@ -72,7 +94,7 @@ export function collect({ type, name }) {
 
   log.info('收集组件工作开始...\n');
 
-  const runtimePath = path.resolve(getCliRootPath(), '../node_modules', '@ctl', folderTypeName);
+  const runtimePath = path.resolve(NodeModulesPath, folderTypeName);
 
   fse.mkdirsSync(runtimePath);
 
@@ -91,7 +113,7 @@ export function collect({ type, name }) {
       log.info(`${filename}组件收集完成`);
     });
   } else {
-    const filePath = path.resolve(getCliRootPath(), '../packages', name, folderTypeName);
+    const filePath = path.resolve(getCliRootPath(), '../packages', folderTypeName, name);
     const hasCompPackage = fs.existsSync(filePath);
     if (!hasCompPackage) {
       log.error(chalk.red(`${name}组件不存在`));
@@ -99,8 +121,7 @@ export function collect({ type, name }) {
     }
     const targetPath = path.resolve(runtimePath, name);
 
-    const componentPath = path.resolve(getCliRootPath(), '../packages', name);
-    onRuntime({ componentPath, targetPath, name });
+    onRuntime({ componentPath: filePath, targetPath, name });
     log.info(chalk.green(`${name}组件收集完成`));
   }
 

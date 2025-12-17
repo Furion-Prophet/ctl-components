@@ -5,8 +5,8 @@ import * as fse from 'fs-extra';
 import * as ejs from 'ejs';
 import { execSync } from 'child_process';
 import { getCliRootPath, buildComponentName, printPkgVersion } from '../lib/util';
+import { AllowTypes } from '../lib/const';
 
-const allowTypes = [{ name: 'rn', value: 'rn' }, { name: 'taro', value: 'taro' }, { name: 'react(未支持)', value: 'react' }];
 export const promptList = [
   {
     type: 'input',
@@ -20,7 +20,7 @@ export const promptList = [
     name: 'type',
     type: 'rawlist',
     message: '请选择组件类型',
-    choices: allowTypes,
+    choices: AllowTypes,
     default: 'rn',
   },
   {

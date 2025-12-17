@@ -4,14 +4,15 @@ const program = require('commander');
 const inquirer = require('inquirer');
 
 const { run } = require('../dist/run');
-const { CollectType } = require('../dist/util/const');
-const { getCollectComponent } = require('../dist/util/index');
+const { CollectType, TaroPlatform } = require('../dist/lib/const');
+const { getCollectComponent } = require('../dist/lib/util');
 
 program
   .option('-n, --name <name>', 'Which component wants to collect', '')
   .option('-t, --type <type>', 'The environment of collecting, taro/rn')
+  .option('-p, --platform <platform>', 'weapp/swan/h5/tt/alipay/rn/qq/jd/quickapp')
   .action(async (data) => {
-    let { name: componentName, type } = data;
+    let { name: componentName, type, platform, env } = data;
 
     if (!type) {
       const config = await inquirer.prompt([CollectType]);
@@ -23,7 +24,11 @@ program
       const config = await inquirer.prompt([CollectComponent]);
       componentName = componentName || config.name;
     }
+
+    if (type === 'taro' && !platform) {
+      platform = TaroPlatform[platform] || 'h5';
+    }
     
-    run({ componentName, type });
+    run({ componentName, type, platform, env: 'dev' });
   })
   .parse(process.argv);

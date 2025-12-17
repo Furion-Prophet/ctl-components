@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as chokidar from 'chokidar';
 
 import { getCliRootPath, type2FolderName } from '../lib/util';
-import { collect } from '../collect';
+import { collect, updateComponentChange } from '../collect';
 import log from '../lib/log';
 import { IBuildOptions } from '../lib/types';
 import { ENV_SHORT } from '../lib/const';
@@ -14,6 +14,7 @@ import { TARO_PLAYGROUND } from '../lib/constants';
 
 class Builder {
   options: IBuildOptions;
+
   constructor(options: IBuildOptions) {
     this.options = options;
   }
@@ -23,33 +24,28 @@ class Builder {
   }
 
 
- spawnTaroProcess() {
-  const { env, platform } = this.options;
-  const scriptsName = `${ENV_SHORT[env]}:${platform}`;
-  const taroProcess = spawn('yarn', [scriptsName], {
-    cwd: TARO_PLAYGROUND,
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      env,
-      platform,
-    },
-  });
-  
+  spawnTaroProcess() {
+    const { env, platform } = this.options;
+    const scriptsName = `${ENV_SHORT[env]}:${platform}`;
+    const taroProcess = spawn('yarn', [scriptsName], {
+      cwd: TARO_PLAYGROUND,
+      stdio: 'inherit',
+      env: {
+        ...process.env,
+        env,
+        platform,
+      },
+    });
 
-  taroProcess.on('data', (data) => {
-    console.log(data.toString());
-  });
+    taroProcess.on('exit', () => {
+      log.info(`Taro构建任务完成`);
+      process.exit(0);
+    });
 
-  taroProcess.on('exit', () => {
-    log.info(`Taro构建任务完成`);
-    process.exit(0);
-  });
-
-  taroProcess.on('error', (err) => {
-    log.error(`Taro子进程出现错误，请检查: ${err}`);
-    process.exit(1);
-  });
+    taroProcess.on('error', (err) => {
+      log.error(`Taro子进程出现错误，请检查: ${err}`);
+      process.exit(1);
+    });
   }
 
   copyDependenciesToProject() {
@@ -70,10 +66,8 @@ class Builder {
     }
 
     if (!hasCompPackage) console.log(chalk.red(`组件${componentName}不存在`));
-    else {
-      const watchesFile = this.copyDependenciesToProject();
-      watches = watchesFile.map((file) => file.path);
-    }
+    const watchesFile = this.copyDependenciesToProject();
+    watches = watchesFile.map((file) => file.path);
     chokidar.watch(watches, {
       ignoreInitial: true,
       ignored: [
@@ -89,8 +83,9 @@ class Builder {
       awaitWriteFinish: {
         stabilityThreshold: 1000,
       },
-    }).on('all', (event, path) => {
-      log.info('path', event, path);
+    }).on('all', (event, changePath) => {
+      log.info('path', event, changePath);
+      updateComponentChange({ changePath });
     });
     this.spawnTaroProcess();
   }
