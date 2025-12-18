@@ -5,7 +5,9 @@ import * as fse from 'fs-extra';
 import * as ejs from 'ejs';
 import { execSync } from 'child_process';
 import { getCliRootPath, buildComponentName, printPkgVersion } from '../lib/util';
-import { AllowTypes } from '../lib/const';
+import { AllowTypes, COMP_TYPES } from '../lib/const';
+
+const COMP_TYPES_ARR = Object.keys(COMP_TYPES).map((key) => ({ name: COMP_TYPES[key], value: key }));
 
 export const promptList = [
   {
@@ -24,6 +26,13 @@ export const promptList = [
     default: 'rn',
   },
   {
+    name: 'componentType',
+    type: 'rawlist',
+    message: '请选择组件功能类型',
+    choices: COMP_TYPES_ARR,
+    default: COMP_TYPES.basic,
+  },
+  {
     name: 'cName',
     type: 'input',
     message: '组件中文名',
@@ -33,7 +42,7 @@ export const promptList = [
   },
 ];
 
-export function initComponent({ name, type, cName }) {
+export function initComponent({ name, type, cName, componentType }) {
   const { kebabCase, PascalCase } = buildComponentName(name);
   const packagePath = path.resolve(getCliRootPath(), `../packages/${type}`, kebabCase);
   const valid = checkValid(name, packagePath);
@@ -42,10 +51,11 @@ export function initComponent({ name, type, cName }) {
 
   const data = {
     kebabCaseComponentName: kebabCase,
-    PascalCaseComponentName: PascalCase,
+    PascalCaseComponentName: `C${PascalCase}`,
     version: printPkgVersion(),
     name_CH: cName,
     name,
+    componentType,
   };
   create({ targetPath: packagePath, tempPath, data });
   execSync('yarn install', {

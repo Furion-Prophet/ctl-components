@@ -40,28 +40,6 @@ function onRuntime({ componentPath, targetPath, name }) {
   watches.push({ name, path: componentPath });
 }
 
-// 生成本地运行时的页面route config
-function setRuntimeConfigOnTaro() {
-  const configPath = path.resolve(
-    getCliRootPath(),
-    '../packages/runtime-taro/src/app.config.ts'
-  );
-  const pages = [
-    'pages/index/index',
-    ...watches.map((file) => `components/${file.name}/index`),
-  ];
-  const config = `export default {
-    pages: ${JSON.stringify(pages)},
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
-    },
-  };\n`;
-  fs.writeFileSync(configPath, config, { flag: 'w+' });
-}
-
 export function updateComponentChange({ changePath }) {
   const [, folderPath] = changePath.split(/packages\//);
   const [type, ...other] = folderPath.split('/');
@@ -126,8 +104,6 @@ export function collect({ type, name }) {
   }
 
   log.success(chalk.green('demo收集完成'));
-
-  setRuntimeConfigOnTaro();
 
   return watches;
 }

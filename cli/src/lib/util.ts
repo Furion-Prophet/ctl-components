@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as pascalcase from 'pascalcase';
 import { ROOT_DIR } from './constants';
 
+const get = require('lodash/get');
+
 type CollectType = 'rn' | 'taro' | 'react';
 
 const kebabCase = str =>
@@ -60,4 +62,18 @@ export function getCollectComponent(type: CollectType) {
     choices: comps,
     default: 'all',
   }
+}
+
+export function getPkgContent(packagePath?: string): any {
+  packagePath = packagePath || path.resolve(getCliRootPath(), 'package.json');
+  if (!packagePath.includes('package.json')) {
+    packagePath = path.join(packagePath, 'package.json');
+  }
+  // eslint-disable-next-line import/no-dynamic-require
+  return require(packagePath);
+}
+
+export function getSpecifiedValOfPkg(keyPath: string, packagePath?: string): any {
+  const content = getPkgContent(packagePath);
+  return get(content, keyPath);
 }

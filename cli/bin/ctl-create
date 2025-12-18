@@ -12,8 +12,9 @@ program
         name,
         type,
         cName,
+        componentType,
       } = config;
-      initComponent({ name, type, cName });
+      initComponent({ name, type, cName, componentType });
     });
   })
   .parse(process.argv);

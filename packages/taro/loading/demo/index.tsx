@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from '@tarojs/components';
-import Buttons from '@ctl/taro/buttons';
+import CLoading from '@ctl/taro/loading';
 
 interface DemoPageState {
   [key: string]: any;
@@ -15,7 +15,7 @@ export default class DemoPage extends Component<any, DemoPageState> {
     let comp: JSX.Element | null = null;
     switch (caseName) {
       case '常规用法': {
-        comp = <Buttons />;
+        comp = <CLoading />;
         break;
       }
       default: {
@@ -23,7 +23,7 @@ export default class DemoPage extends Component<any, DemoPageState> {
         break;
       }
     }
-    // 用this.cases储存jsx用于单测快照测试1
+    // 用this.cases储存jsx用于单测快照测试
     if (!this.cases[caseName]) {
       this.cases[caseName] = comp;
     }

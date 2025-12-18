@@ -33,3 +33,13 @@ export const TaroPlatformCollect = {
   choices: Object.values(TaroPlatform),
   default: TaroPlatform.h5,
 }
+
+// 组件类型中英文映射
+export const COMP_TYPES = {
+  basic: '通用组件',
+  form: '表单组件',
+  view: '视图组件',
+  feedback: '反馈组件',
+  navigation: '导航',
+  others: '其他',
+};

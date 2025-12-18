@@ -2,11 +2,11 @@ import Taro from '@tarojs/taro-h5';
 import Nerv from 'nervjs';
 import { renderToString } from 'nerv-server';
 import { renderIntoDocument } from 'nerv-test-utils';
-import ButtonsPage from '../../../taro-playground/.temp/pages/buttons';
-import Buttons from '../../../taro-playground/.temp/components/buttons/taro';
+import CLoadingPage from '../../../taro-playground/.temp/pages/loading';
+import CLoading from '../../../taro-playground/.temp/components/loading/taro';
 
-describe('buttons:taro snap', () => {
-  const page = renderIntoDocument(<ButtonsPage />);
+describe('loading:taro snap', () => {
+  const page = renderIntoDocument(<CLoadingPage />);
 
   const { cases } = page;
   const names = Object.keys(cases);
@@ -20,4 +20,4 @@ describe('buttons:taro snap', () => {
   });
 });
 
-describe('buttons:taro behaviour', () => {})
+describe('loading:taro behaviour', () => {})

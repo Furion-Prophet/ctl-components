@@ -1,5 +1,5 @@
 {
-  "name": "@ctl/buttons",
+  "name": "@ctl/button",
   "version": "0.0.1",
   "homepage": "",
   "license": "MIT",
@@ -9,9 +9,10 @@
     "clean": "rm -rf lib"
   },
   "templateInfo": {
-    "name": "buttons",
+    "name": "button",
     "name_CH": "按钮",
-    "platform": "taro"
+    "platform": "taro",
+    "componentType": "basic"
   },
   "dependencies": {
     "classnames": "^2.2.6"

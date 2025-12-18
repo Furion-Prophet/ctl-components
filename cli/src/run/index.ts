@@ -1,16 +1,16 @@
 import { spawn } from 'child_process';
-import * as ora from 'ora';
 import * as chalk from 'chalk';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as chokidar from 'chokidar';
 
-import { getCliRootPath, type2FolderName } from '../lib/util';
-import { collect, updateComponentChange } from '../collect';
+import { getCliRootPath, type2FolderName, getSpecifiedValOfPkg } from '../lib/util';
+import { collect, updateComponentChange,  } from '../collect';
 import log from '../lib/log';
-import { IBuildOptions } from '../lib/types';
-import { ENV_SHORT } from '../lib/const';
-import { TARO_PLAYGROUND } from '../lib/constants';
+import { IBuildOptions, TemplateInfo } from '../lib/types';
+import { ENV_SHORT, COMP_TYPES } from '../lib/const';
+import { TARO_PLAYGROUND, PACKAGES_DIR } from '../lib/constants';
+import { writeFileTaroHomeConstants } from './writeFile';
 
 class Builder {
   options: IBuildOptions;
@@ -23,6 +23,30 @@ class Builder {
     return this.options.type === 'rn';
   }
 
+  getCompInfo(compName): TemplateInfo {
+    const { type } = this.options;
+    const compPackageJsonPath = path.join(PACKAGES_DIR, type, compName, 'package.json');
+
+    const templateInfo = getSpecifiedValOfPkg('templateInfo', compPackageJsonPath);
+    return templateInfo;
+  }
+
+  // 生成本地运行时的页面route config
+  setRuntimeConfigOnTaro(watches: any[]) {
+    const { type } = this.options;
+
+    if (type === 'taro') {
+      const pagesRoute = ['pages/index/index'];
+      const templateInfos: TemplateInfo[] = [];
+      watches.forEach((file) => {
+        const templateInfo = this.getCompInfo(file.name);
+        templateInfos.push(templateInfo);
+        pagesRoute.push(`components/${file.name}/index`);
+      });
+
+      writeFileTaroHomeConstants(templateInfos, pagesRoute);
+    }
+  }
 
   spawnTaroProcess() {
     const { env, platform } = this.options;
@@ -87,6 +111,7 @@ class Builder {
       log.info('path', event, changePath);
       updateComponentChange({ changePath });
     });
+    this.setRuntimeConfigOnTaro(watchesFile);
     this.spawnTaroProcess();
   }
 }

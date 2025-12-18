@@ -1,6 +1,6 @@
 {
-  "name": "@ctl/<%= kebabCaseComponentName %>",
-  "version": "<%= version %>",
+  "name": "@ctl/loading",
+  "version": "0.0.1",
   "homepage": "",
   "license": "MIT",
   "main": "index.js",
@@ -9,10 +9,10 @@
     "clean": "rm -rf lib"
   },
   "templateInfo": {
-    "name": "<%= name %>",
-    "name_CH": "<%= name_CH %>",
+    "name": "loading",
+    "name_CH": "加载中",
     "platform": "taro",
-    "componentType": "<%= componentType %>"
+    "componentType": "view"
   },
   "dependencies": {
     "classnames": "^2.2.6"

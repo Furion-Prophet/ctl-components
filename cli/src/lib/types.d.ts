@@ -15,3 +15,8 @@ export interface IBuildOptions {
   platform: TaroPlatform;
   env: string;
 }
+
+export interface TemplateInfo {
+  // 组件类型
+  componentType: 'basic' | 'form' | 'view' | 'feedback' | 'navigation' | 'others';
+}
